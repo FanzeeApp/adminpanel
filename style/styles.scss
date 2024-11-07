@@ -1,0 +1,72 @@
+$primary-color: #6a5acd; // Asosiy rang
+$background-color: #f0f0f0; // Fon rangi
+$input-border-color: #d1d1d1; // Inputlar uchun chegarasi
+$input-focus-color: #4caf50; // Inputga diqqat jalb qilinganda rang
+
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: $background-color;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .form {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 400px;
+    text-align: center;
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: $primary-color;
+    }
+
+    label {
+      text-align: start;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 95%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid $input-border-color;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: $input-focus-color;
+        outline: none;
+      }
+    }
+
+    button {
+      width: 100%;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}

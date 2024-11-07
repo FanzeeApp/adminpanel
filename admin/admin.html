@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="./style/styleadmin.css " />
+  </head>
+  <body>
+    <div class="admin-container">
+      <h1>Yangi Mahsulot Qo'shish</h1>
+      <div class="card">
+        <label for="imageUrl">Rasmning https linki:</label>
+        <input
+          type="text"
+          id="imageUrl"
+          placeholder="https://example.com/image.jpg"
+          required
+        />
+
+        <label for="productName">Mahsulot nomi:</label>
+        <input
+          type="text"
+          id="productName"
+          placeholder="Mahsulot nomi"
+          required
+        />
+
+        <label for="productDescription">Mahsulot haqida:</label>
+        <textarea
+          id="productDescription"
+          placeholder="Mahsulot haqida"
+          required
+        ></textarea>
+
+        <label for="productPrice">Mahsulot narxi:</label>
+        <input id="productPrice" placeholder="Mahsulot narxi" required />
+
+        <label for="oldPrice">Oldingi narxi (ixtiyoriy):</label>
+        <input id="oldPrice" placeholder="Oldingi narxi" />
+
+        <button id="addProductBtn">Qo'shish</button>
+      </div>
+    </div>
+
+    <script src="../JavaScript/main.js"></script>
+  </body>
+</html>
