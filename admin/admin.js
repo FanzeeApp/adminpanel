@@ -1,50 +1,47 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const bodyParser = require("body-parser");
+let addProductBtn = document.getElementById("addProductBtn");
 
-const app = express();
-const PORT = 3000;
-app.use(bodyParser.json());
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+addProductBtn.addEventListener("click", async (event) => {
+  event.preventDefault();
 
-const PRODUCTS_FILE = path.join(__dirname, "products.json");
+  let image = document.getElementById("imageUrl").value;
+  let title = document.getElementById("productName").value;
+  let description = document.getElementById("productDescription").value;
+  let productPrice = document.getElementById("productPrice").value;
+  let oldPrice = document.getElementById("oldPrice").value;
 
-function loadProducts() {
-  if (fs.existsSync(PRODUCTS_FILE)) {
-    const data = fs.readFileSync(PRODUCTS_FILE, "utf8");
-    return JSON.parse(data);
+  let malumotOb = {
+    image,
+    title,
+    description,
+    price: parseFloat(productPrice),
+    oldPrice: oldPrice ? parseFloat(oldPrice) : null,
+  };
+
+  try {
+    let response = await fetch("https://uzum-server-1.onrender.com/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(malumotOb),
+    });
+
+    if (response.ok) {
+      let responseData = await response.json();
+      console.log("Mahsulot muvaffaqiyatli qo'shildi:", responseData);
+      alert("Mahsulot muvaffaqiyatli qo'shildi!");
+
+      document.getElementById("imageUrl").value = "";
+      document.getElementById("productName").value = "";
+      document.getElementById("productDescription").value = "";
+      document.getElementById("productPrice").value = "";
+      document.getElementById("oldPrice").value = "";
+    } else {
+      console.error("Xato:", response.statusText);
+      alert("Mahsulot qo'shishda xato yuz berdi.");
+    }
+  } catch (error) {
+    console.error("Tarmoq xatosi:", error);
+    alert("Tarmoq xatosi yuz berdi.");
   }
-  return [];
-}
-
-function saveProducts(products) {
-  fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(products, null, 2));
-}
-
-let products = loadProducts();
-
-app.get("/products", (req, res) => {
-  res.json(products);
-});
-
-app.post("/products", (req, res) => {
-  const newProduct = req.body;
-
-  if (!newProduct.image || !newProduct.title || !newProduct.price) {
-    return res.status(400).json({ error: "Barcha maydonlar talab qilinadi" });
-  }
-
-  products.push(newProduct);
-  saveProducts(products);
-  res.status(201).json(newProduct);
-});
-
-app.listen(PORT, () => {
-  console.log(`Server ishga tushdi, port: ${PORT}`);
 });
